@@ -2744,7 +2744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  jumpForce: 10
+  jumpForce: 8
   feetpos: {fileID: 1545973173}
   checkRadius: 0.3
   whatIsGround:

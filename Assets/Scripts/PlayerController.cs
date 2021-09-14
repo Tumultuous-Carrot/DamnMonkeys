@@ -31,24 +31,12 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y); 
 
         //Поворот спрайта персонажа(отзеркаливание в зависимости от стороны, в которую идёт персонаж)
-        if (facingRight == false && moveInput > 0) 
-        {
-            Flip();
-        }
-        else if (facingRight == true && moveInput < 0)
+        if ((!facingRight && moveInput > 0) || (facingRight && moveInput < 0)) 
         {
             Flip();
         }
 
-        
-        if (moveInput == 0)
-        {
-            anim.SetBool("isRunning", false);
-        }
-        else
-        {
-            anim.SetBool("isRunning", true);
-        }
+        anim.SetBool("isRunning", moveInput != 0);
     }
 
     private void Update()
@@ -57,19 +45,13 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(feetpos.position, checkRadius, whatIsGround);
 
         //прыжок
-        if (isGrounded == true && Input.GetKeyDown(KeyCode.Space))
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             rb.velocity = Vector2.up * jumpForce;
             anim.SetTrigger("takeOff");
         }
-        if(isGrounded == true)
-        {
-            anim.SetBool("isJumping", false);
-        }
-        else
-        {
-            anim.SetBool("isJumping", true);
-        }
+
+        anim.SetBool("isJumping", !isGrounded);
     }
 
     //Функция поворота спрайта персонажа
